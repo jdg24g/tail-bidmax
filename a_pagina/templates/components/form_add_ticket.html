@@ -18,7 +18,7 @@
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre del Cliente</label>
-                    <input type="text" name="cliente" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-300">
+                    <input type="text" name="cliente"  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-300">
                 </div>
 
                 <div>
@@ -62,7 +62,7 @@
             </div>
 
             <div class="flex gap-4">
-                <button type="button" onclick="addItem()" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 w-full">
+                <button id="add-item" type="button" onclick="addItem()" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 w-full">
                     Agregar Item
                 </button>
             </div>
@@ -90,4 +90,26 @@ function removeItem(button) {
         button.closest('.item-row').remove();
     }
 }
+
+function inputOverKeyboard() {
+    const inputs = document.querySelectorAll('input, textarea');
+    
+    inputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            setTimeout(() => {
+                input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        });
+    });
+}
+function scrollDown(){
+    const button = document.getElementById('add-item');
+    button.addEventListener('click', function() {
+        button.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+}
+
+// Llamar a la función cuando se carga el documento
+document.addEventListener('DOMContentLoaded', inputOverKeyboard);
+document.addEventListener('DOMContentLoaded', scrollDown);
 </script>
