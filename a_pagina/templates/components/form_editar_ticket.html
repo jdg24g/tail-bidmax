@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block content %}
 <div class="flex justify-center">
     <div class="relative shadow-md sm:rounded-lg p-6 rounded-sm bg-white dark:bg-gray-800 mt-5 w-11/12">
-        <h1 class="text-2xl font-bold mb-6">Editar Ticket #{{ object.id }}</h1>
+        <h1 class="text-2xl font-bold mb-6 dark:text-white">Editar Ticket #{{ object.id }}</h1>
         
         <form method="POST" class="space-y-6">
             {% csrf_token %}
@@ -13,7 +14,7 @@
             <div class="space-y-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tipo de Pedido</label>
-                    <select name="tipo" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    <select name="tipo" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:text-gray-300">
                         <option value="DELIVERY" {% if object.tipo == 'DELIVERY' %}selected{% endif %}>DELIVERY</option>
                         <option value="MESA" {% if object.tipo == 'MESA' %}selected{% endif %}>MESA</option>
                         <option value="RECOGER" {% if object.tipo == 'RECOGER' %}selected{% endif %}>RECOGER</option>
@@ -22,20 +23,30 @@
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre del Cliente</label>
-                    <input type="text" name="cliente" value="{{ object.cliente }}" required 
+                    {% if object.cliente %}
+                    <input type="text" name="cliente" value="{{ object.cliente }}"  
                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    {% else %}
+                    <input type="text" name="cliente" value=""  
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    {% endif %}
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Celular</label>
+                    {% if object.celular %}
                     <input type="tel" name="celular" value="{{ object.celular }}"
                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    {% else %}
+                    <input type="tel" name="celular" value=""
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    {% endif %}
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Número de Mesa</label>
                     <input type="number" name="mesa" value="{{ object.mesa }}" min="1"
-                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:text-gray-300">
                 </div>
 
                 <div>
@@ -47,15 +58,15 @@
 
             <!-- Items del Pedido -->
             <div id="items-container" class="space-y-4">
-                <h2 class="text-lg font-semibold">Items del Pedido</h2>
+                <h2 class="text-lg font-semibold dark:text-white">Items del Pedido</h2>
                 {% for item in object.itempedido_set.all %}
                 <div class="item-row flex gap-4 items-end">
                     <div class="flex-1">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Producto</label>
-                        <select name="productos[]" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <select name="productos[]" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:text-gray-300">
                             {% for producto in productos %}
-                                <option value="{{ producto.id }}" {% if producto.id == item.producto.id %}selected{% endif %}>
-                                    {{ producto.nombre }} - ${{ producto.precio }}
+                                <option class="dark:text-white dark:bg-gray-800" value="{{ producto.id }}" {% if producto.id == item.producto.id %}selected{% endif %}>
+                                    {{ producto.nombre }} - {{ producto.precio|intcomma }}Gs.
                                 </option>
                             {% endfor %}
                         </select>
@@ -63,7 +74,7 @@
                     <div class="w-32">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cantidad</label>
                         <input type="number" name="cantidades[]" value="{{ item.cantidad }}" required min="1"
-                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:text-gray-300">
                     </div>
                     <button type="button" onclick="removeItem(this)" class="text-red-600 hover:text-red-800 mb-1">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -98,16 +109,16 @@ function addItem() {
         <div class="item-row flex gap-4 items-end">
             <div class="flex-1">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Producto</label>
-                <select name="productos[]" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                <select name="productos[]" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:text-gray-300">
                     {% for producto in productos %}
-                        <option value="{{ producto.id }}">{{ producto.nombre }} - ${{ producto.precio }}</option>
+                        <option value="{{ producto.id }}">{{ producto.nombre }} - {{ producto.precio|intcomma }}Gs.</option>
                     {% endfor %}
                 </select>
             </div>
             <div class="w-32">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Cantidad</label>
                 <input type="number" name="cantidades[]" value="1" required min="1"
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:text-gray-300">
             </div>
             <button type="button" onclick="removeItem(this)" class="text-red-600 hover:text-red-800 mb-1">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
