@@ -1,0 +1,43 @@
+{% load humanize %}
+<div class="text-center" style="width: 58mm; font-family: monospace;">
+    <div class="text-center font-bold" style="font-size: 20px;">
+        <h2>BIDMAX</h2>
+    </div>
+    
+    <div style="border-top: 1px dashed #000; font-size: 14px;">
+        Cliente: {{ ticket.cliente.nombre }}
+    </div>
+
+    {% if ticket.mesa %}
+    <div style="font-size: 14px;">
+    Mesa: {{ ticket.mesa }}
+    </div>
+    {% endif %}
+
+    <div style="font-size: 14px;">
+    Fecha: {{ ticket.add_time|date:"d/m/Y" }}<br>
+    Hora: {{ ticket.add_time|date:"H:i" }}
+    </div>
+
+    {% if ticket.observaciones %}
+    <div style="font-size: 14px;">
+    ------------------------
+    Obs: {{ ticket.observaciones }}<br>
+    ------------------------
+    </div>
+    {% endif %}
+
+    <div style="border-top: 1px dashed #000; font-size: 14px;">
+        PRODUCTOS
+    </div>
+    {% for item in items %}
+    <div style="font-size: 14px; margin:10px 0px;">
+    {{ item.cantidad }}x {{ item.producto.nombre }}
+    </div>
+    {% endfor %}
+    <br>
+    <div style="border-top: 1px dashed #000; font-size: 14px;">
+        <br>
+        TOTAL: {{ total|intcomma }}Gs.
+    </div>
+</div>
