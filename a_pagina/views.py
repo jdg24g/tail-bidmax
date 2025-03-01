@@ -8,11 +8,11 @@ from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 
 #login required redirect to django admin login page
-@login_required(login_url='/admin/login/')
+#@login_required(login_url='/admin/login/')
 def index(request):
     title = "BIDMAX - INICIO"
     tickets = Ticket.objects.all().order_by('-add_time')
-    color = "#0075ff"
+    color = "#0F172A"
     context = {
         'title':title,
         'items':tickets,
@@ -64,7 +64,7 @@ def crear_ticket(request):
     
     # GET request
     title = "BIDMAX - CREAR TICKET"
-    color = "#0075ff"
+    color = "#0F172A"
     context = {
         'title': title,
         'color': color,

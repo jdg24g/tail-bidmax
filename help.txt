@@ -1,0 +1,2 @@
+#run this command to watch the css file
+npx @tailwindcss/cli -i ./a_pagina/static/src/input.css -o ./a_pagina/static/src/output.css --watch
