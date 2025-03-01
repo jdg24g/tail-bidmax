@@ -12,6 +12,12 @@
     {% else %}
     {% endif %}
 
+    {% if ticket.celular %}
+    <div style="font-size: 14px;">
+    CEL: {{ ticket.celular }}
+    </div>
+    {% endif %}
+
     {% if ticket.mesa %}
     <div style="font-size: 14px;">
     Mesa: {{ ticket.mesa }}

@@ -34,11 +34,12 @@
                         {{ item.cliente }}
                     </td>
                     {% endif %}
+                    
                     <td class="px-2 py-2 select-none">
                         Gs. {{ item.get_total|intcomma }}
                     </td>
                     <td class="px-1 py-1">
-                        <a href="{% url 'detalle_ticket' item.id %}" target="_blank" class="font-medium text-blue-600 dark:text-blue-500 hover:underline me-2">
+                        <a href="{% url 'ver_ticket' item.id %}" target="_blank" class="font-medium text-blue-600 dark:text-blue-500 hover:underline me-2">
                             <i class="fa-solid fa-eye"></i>
                         </a>
                         <a href="{% url 'editar_ticket' item.id %}" class="font-medium text-yellow-600 dark:text-yellow-500 hover:underline me-2">

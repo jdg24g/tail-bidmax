@@ -1,0 +1,53 @@
+{% load static %} {% load humanize %}
+
+<div class="flex justify-center">
+  <div
+    class="relative shadow-md sm:rounded-lg p-6 rounded-sm bg-white dark:bg-gray-800 mt-5 sm:w-6/12 w-full"
+  >
+    <h1 class="text-2xl font-bold mb-6 dark:text-white">
+      Ticket #{{ ticket.id }}
+    </h1>
+    <div class="space-y-4 dark:text-white">
+      <h2>Tipo de Pedido: {{ ticket.tipo }}</h2>
+      {% if ticket.cliente %}
+      <h2>Cliente: {{ ticket.cliente }}</h2>
+      {% else %}
+      {% endif %}
+      {% if ticket.mesa %}
+      <h2>Mesa: {{ ticket.mesa }}</h2>
+      {% else %}
+      {% endif %}
+      {% if ticket.celular %}
+      <h2>Celular: {{ ticket.celular }}</h2>
+      {% else %}
+      {% endif %}
+      {% if ticket.observacion %}
+      <h2>Observaciones: {{ ticket.observacion }}</h2>
+      {% else %}
+      {% endif %}
+      <div class="mt-4 flex flex-col gap-4">
+        <h2 class="text-2xl font-bold">Total: {{ ticket.get_total|intcomma }} Gs.</h2>
+        <h2 class="text-lg font-bold">Productos</h2>
+        <table class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-white">
+          <thead >
+            <tr>
+              <th class="px-4 py-3">Producto</th>
+              <th class="px-4 py-3">Cantidad</th>
+              <th class="px-4 py-3">Precio</th>
+            </tr>
+          </thead>
+          <tbody class="text-center dark:text-gray-400">
+            {% for i in items %}
+            <tr>
+              <td class="px-4 py-3">{{ i.producto.nombre }}</td>
+              <td class="px-4 py-3">{{ i.cantidad }}</td>
+              <td class="px-4 py-3">{{ i.producto.precio|intcomma }} Gs.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
