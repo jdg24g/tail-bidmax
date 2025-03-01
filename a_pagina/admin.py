@@ -18,3 +18,8 @@ class TicketAdmin(admin.ModelAdmin):
 admin.site.register(Producto)
 admin.site.register(Cliente)
 admin.site.register(ItemPedido)
+
+
+admin.site.site_header = 'BIDMAX'
+admin.site.site_title = 'BIDMAX'
+admin.site.index_title = 'BIDMAX'

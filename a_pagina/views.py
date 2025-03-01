@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import ItemPedido,Ticket,Cliente,Producto
 from django.contrib.auth.decorators import login_required
-from .models import tipo  # Agregamos esta importación específica
+from .models import tipo  
 from django.http import JsonResponse
 from django.views import View
 from django.views.generic.edit import UpdateView
@@ -69,7 +69,7 @@ def crear_ticket(request):
         'title': title,
         'color': color,
         'productos': Producto.objects.all(),
-        'tipos': tipo,  # Ahora tipo está correctamente importado
+        'tipos': tipo,
     }
     return render(request, 'crear_ticket.html', context)
 
