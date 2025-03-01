@@ -8,7 +8,7 @@ from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 
 #login required redirect to django admin login page
-#@login_required(login_url='/admin/login/')
+@login_required(login_url='/admin/login/')
 def index(request):
     title = "BIDMAX - INICIO"
     tickets = Ticket.objects.all().order_by('-add_time')
