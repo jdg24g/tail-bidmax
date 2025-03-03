@@ -1,0 +1,57 @@
+<div
+  class="bg-gradient-to-b from-slate-900 to-slate-700 flex justify-center items-center h-svh dark:bg-gray-900"
+>
+  <div
+    class="flex flex-col items-center justify-center bg-white shadow-md rounded-lg p-8 dark:bg-gray-800"
+  >
+    <h1 class="text-2xl font-bold mb-4 dark:text-white">BIDMAX</h1>
+    <form
+      action=""
+      method="post"
+      class="flex flex-col items-center justify-center"
+    >
+      {% csrf_token %}
+      <div class="mb-4">
+        <label
+          for="username"
+          class="block text-gray-700 text-sm font-bold mb-2 dark:text-white"
+        >
+          Usuario
+        </label>
+        <input
+          required
+          type="text"
+          name="username"
+          id="username"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 dark:bg-gray-700 dark:text-white leading-tight  focus:shadow-outline outline-sky-300"
+          placeholder="Usuario"
+        />
+      </div>
+      <div class="mb-4">
+        <label
+          for="password"
+          class="block text-gray-700 text-sm font-bold mb-2 dark:text-white"
+        >
+          Contraseña
+        </label>
+        <input
+          required
+          type="password"
+          name="password"
+          id="password"
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight outline-sky-300 focus:shadow-outline dark:bg-gray-700 dark:text-white"
+          placeholder="Contraseña"
+        />
+      </div>
+      <button
+        type="submit"
+        class="bg-blue-500 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      >
+        Iniciar sesión
+      </button>
+    </form>
+    {% if error_message %}
+      {% include 'components/error_message.html' with error_message=error_message %}
+    {% endif %}
+  </div>
+</div>

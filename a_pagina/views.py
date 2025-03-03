@@ -6,9 +6,10 @@ from django.http import JsonResponse
 from django.views import View
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
+from django.contrib.auth import authenticate, login
 
 #login required redirect to django admin login page
-@login_required(login_url='/admin/login/')
+@login_required(login_url='/login/')
 def index(request):
     title = "BIDMAX - INICIO"
     tickets = Ticket.objects.all().order_by('-add_time')
@@ -20,7 +21,7 @@ def index(request):
     }
     return render(request,'index.html',context)
 
-@login_required(login_url='/admin/login/')
+@login_required(login_url='/login/')
 def ver_ticket(request,pk):
     ticket = get_object_or_404(Ticket,pk=pk)
     items = ItemPedido.objects.filter(ticket=ticket)
@@ -32,7 +33,7 @@ def ver_ticket(request,pk):
     }
     return render(request,'watch.html',context)
 
-@login_required(login_url='/admin/login/')
+@login_required(login_url='/login/')
 def detalle_ticket(request,pk):
     ticket = get_object_or_404(Ticket,pk=pk)
     items = ItemPedido.objects.filter(ticket=ticket)
@@ -44,7 +45,7 @@ def detalle_ticket(request,pk):
     }
     return render(request,'detalle_ticket.html',context)
 
-@login_required(login_url='/admin/login/')
+@login_required(login_url='/login/')
 def crear_ticket(request):
     if request.method == 'POST':
         # Crear el ticket
@@ -125,3 +126,24 @@ class EditarTicketView(UpdateView):
         if self.request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             return JsonResponse({'success': True, 'redirect_url': self.get_success_url()})
         return redirect('index')
+    
+def login_page(request):
+    error_message = None
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        try:
+            if user is not None:
+                login(request,user)
+                return redirect('index')
+            else:
+                error_message = 'Usuario o contraseña incorrectos'
+        except Exception as e:
+            error_message = str(e)
+    context = {
+        'error_message': error_message,
+        'title': 'BIDMAX - LOGIN',
+        'color': '#0F172A'
+    }
+    return render(request, 'login.html', context)
