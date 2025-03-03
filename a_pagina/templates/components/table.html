@@ -1,3 +1,4 @@
+{% load static %}
 {% load humanize %}
 <div class="flex justify-center">
     <div class="relative  shadow-md sm:rounded-lg p-2 rounded-sm bg-white dark:bg-gray-800 mt-5 w-11/12">
@@ -62,91 +63,43 @@
         </tbody>
         
     </table>
-    <nav aria-label="Page navigation example" class="mt-5">
+    <nav aria-label="Paginación" class="mt-5">
         <ul class="inline-flex -space-x-px text-sm">
-          <li>
-            <a href="#" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-          </li>
-          <li>
-            <a href="#" aria-current="page" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-          </li>
-        </ul>
-      </nav>
-</div>
-</div>
-
-<script>
-    function printTicket(url) {
-        // Abre la URL en una nueva ventana
-        const printWindow = window.open(url, '_blank');
-        
-        // Cuando la ventana termine de cargar, imprime
-        printWindow.onload = function() {
-            printWindow.print();
-            // Espera un momento y luego cierra la ventana
-            setTimeout(function() {
-                printWindow.close();
-            }, 10000); // Espera 1 segundo antes de cerrar
-        };
-    }
-
-    function deleteTicket(ticketId) {
-        const themeColor = document.querySelector('meta[name="theme-color"]');
-        themeColor.setAttribute('content', '#991B1B');
-        if (confirm('¿Estás seguro que deseas eliminar este ticket?')) {
+            <li>
+                <a href="?page={% if items.has_previous %}{{ items.previous_page_number }}{% else %}1{% endif %}" 
+                   class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white {% if not items.has_previous %}pointer-events-none opacity-50{% endif %}">
+                    Anterior
+                </a>
+            </li>
             
-            fetch(`/delete-ticket/${ticketId}/`, {
-                method: 'DELETE',
-                headers: {
-                    'X-CSRFToken': getCookie('csrftoken')
-                },
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Recarga la página después de eliminar
-                    window.location.reload();
-                    themeColor.setAttribute('content', '#0F172A');
-                } else {
-                    alert('Error al eliminar el ticket');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Error al eliminar el ticket');
-            });
-        }else{
-            themeColor.setAttribute('content', '#0F172A');
-        }
-    }
+            {% for num in items.paginator.page_range %}
+                {% if num == items.number %}
+                <li>
+                    <a href="?page={{ num }}" 
+                       aria-current="page" 
+                       class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">
+                        {{ num }}
+                    </a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="?page={{ num }}" 
+                       class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                        {{ num }}
+                    </a>
+                </li>
+                {% endif %}
+            {% endfor %}
+            
+            <li>
+                <a href="?page={% if items.has_next %}{{ items.next_page_number }}{% else %}{{ items.paginator.num_pages }}{% endif %}" 
+                   class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white {% if not items.has_next %}pointer-events-none opacity-50{% endif %}">
+                    Siguiente
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</div>
 
-    // Función auxiliar para obtener el token CSRF
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
-</script>
+<script src="{% static 'js/table.js' %}"></script>

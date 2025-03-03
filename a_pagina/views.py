@@ -7,19 +7,32 @@ from django.views import View
 from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login
+from django.core.paginator import Paginator
 
 #login required redirect to django admin login page
 @login_required(login_url='/login/')
 def index(request):
     title = "BIDMAX - INICIO"
-    tickets = Ticket.objects.all().order_by('-add_time')
     color = "#0F172A"
+    
+    # Obtener todos los tickets ordenados
+    lista_tickets = Ticket.objects.all().order_by('-add_time')
+    
+    # Crear el paginador con 50 items por página
+    paginator = Paginator(lista_tickets, 50)
+    
+    # Obtener el número de página desde la URL
+    page_number = request.GET.get('page', 1)
+    
+    # Obtener los tickets para la página actual
+    tickets = paginator.get_page(page_number)
+    
     context = {
-        'title':title,
-        'items':tickets,
-        'color':color
+        'title': title,
+        'items': tickets,  # Mantiene el mismo nombre 'items' para compatibilidad con el template
+        'color': color
     }
-    return render(request,'index.html',context)
+    return render(request, 'index.html', context)
 
 @login_required(login_url='/login/')
 def ver_ticket(request,pk):
