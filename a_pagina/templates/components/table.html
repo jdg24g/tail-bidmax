@@ -2,7 +2,7 @@
 {% load humanize %}
 <div class="flex justify-center">
     <div class="relative  shadow-md sm:rounded-lg p-2 rounded-sm bg-white dark:bg-gray-800 mt-5 w-11/12">
-    <table class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400">
+    <table class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400" hx-ext="ws" ws-connect="/ws/ticket/" ws-send>
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>                
                 <th scope="col" class="px-4 py-3">
