@@ -8,7 +8,7 @@ function printTicket(url) {
     // Espera un momento y luego cierra la ventana
     setTimeout(function () {
       printWindow.close();
-    }, 10000); // Espera 1 segundo antes de cerrar
+    }, 5000); // Espera 1 segundo antes de cerrar
   };
 }
 

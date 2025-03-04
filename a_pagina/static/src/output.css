@@ -891,6 +891,9 @@
   .text-red-800 {
     color: var(--color-red-800);
   }
+  .text-slate-800 {
+    color: var(--color-slate-800);
+  }
   .text-white {
     color: var(--color-white);
   }
@@ -1041,6 +1044,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-sky-800);
+      }
+    }
+  }
+  .hover\:bg-slate-300 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-slate-300);
       }
     }
   }
@@ -1291,6 +1301,11 @@
       background-color: var(--color-gray-900);
     }
   }
+  .dark\:bg-slate-800 {
+    @media (prefers-color-scheme: dark) {
+      background-color: var(--color-slate-800);
+    }
+  }
   .dark\:bg-transparent {
     @media (prefers-color-scheme: dark) {
       background-color: transparent;
@@ -1362,6 +1377,15 @@
       &:hover {
         @media (hover: hover) {
           background-color: var(--color-gray-700);
+        }
+      }
+    }
+  }
+  .dark\:hover\:bg-slate-700 {
+    @media (prefers-color-scheme: dark) {
+      &:hover {
+        @media (hover: hover) {
+          background-color: var(--color-slate-700);
         }
       }
     }
