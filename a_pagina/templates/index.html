@@ -10,7 +10,8 @@
  {% else %}
  <div class="flex justify-center items-center h-svh dark:bg-gray-900 dark:text-white">
     <div class="flex flex-col items-center justify-center">
-        <h1 class="text-2xl font-bold">No hay tickets</h1>
+        <h1 class="text-2xl font-bold mb-4">No hay tickets</h1>
+        <a href="{% url 'crear_ticket' %}" class="bg-blue-500 text-white px-4 py-2 rounded-md">Crear Ticket</a>
     </div>
  </div>
  {% endif %}
