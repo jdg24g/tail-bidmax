@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django_cleanup.apps.CleanupConfig',
+    'django_htmx',
     'a_pagina'
 ]
 
