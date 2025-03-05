@@ -1,3 +1,4 @@
+#views.py
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import ItemPedido,Ticket,Cliente,Producto
 from django.contrib.auth.decorators import login_required
@@ -8,6 +9,8 @@ from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 #login required redirect to django admin login page
 @login_required(login_url='/login/')
@@ -80,7 +83,18 @@ def crear_ticket(request):
                 producto_id=producto_id,
                 cantidad=int(cantidad)
             )
-        
+        items = ItemPedido.objects.filter(ticket=ticket)
+        total = sum(item.producto.precio * item.cantidad for item in items)
+        async_to_sync(get_channel_layer().group_send)(
+                "tickets",
+                {
+                    "type": "ticket_created",
+                    "message": {
+                        "action": "created",
+                    }
+                }
+            )
+
         if 'imprimir' in request.POST:
             return JsonResponse({
                 'success': True,
@@ -104,6 +118,15 @@ class DeleteTicketView(View):
         try:
             ticket = get_object_or_404(Ticket, pk=pk)
             ticket.delete()
+            async_to_sync(get_channel_layer().group_send)(
+                "tickets",
+                {
+                    "type": "ticket_deleted",
+                    "message": {
+                        "action": "deleted",
+                    }
+                }
+            )
             return JsonResponse({'message': 'Ticket eliminado correctamente'}, status=200)
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
@@ -135,6 +158,17 @@ class EditarTicketView(UpdateView):
                 producto_id=producto_id,
                 cantidad=int(cantidad)
             )
+
+        # Enviar notificación WebSocket
+        async_to_sync(get_channel_layer().group_send)(
+            "tickets",
+            {
+                "type": "ticket_updated",
+                "message": {
+                    "action": "updated",
+                }
+            }
+        )
 
         if self.request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             return JsonResponse({'success': True, 'redirect_url': self.get_success_url()})
