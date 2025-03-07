@@ -1,9 +1,19 @@
 from django.db import models
 
 tipo = [
-    ('DELIVERY', 'DELIVERY'),
     ('MESA', 'MESA'),
+    ('DELIVERY', 'DELIVERY'),
     ('RECOGER', 'RECOGER'),
+]
+estado = [
+    ('PENDIENTE', 'PENDIENTE'),
+    ('LISTO', 'LISTO'),
+    ('CANCELADO', 'CANCELADO'),
+]
+caja = [
+    ('PENDIENTE', 'PENDIENTE'),
+    ('A PAGAR', 'A PAGAR'),
+    ('COBRADO', 'COBRADO'),
 ]
 
 class Producto(models.Model):
@@ -33,6 +43,8 @@ class Cliente(models.Model):
     
 class Ticket(models.Model):
     tipo = models.CharField(max_length=255, choices=tipo)
+    estado = models.CharField(max_length=255, choices=estado,default='PENDIENTE',blank=True, null=True)
+    caja = models.CharField(max_length=255, choices=caja,default='PENDIENTE',blank=True, null=True)
     cliente = models.CharField(max_length=255,blank=True, null=True)
     celular = models.CharField(max_length=255,blank=True, null=True)
     mesa = models.PositiveIntegerField(blank=True, null=True)

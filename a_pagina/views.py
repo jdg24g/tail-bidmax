@@ -2,7 +2,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import ItemPedido,Ticket,Cliente,Producto
 from django.contrib.auth.decorators import login_required
-from .models import tipo  
+from .models import tipo,estado,caja
 from django.http import JsonResponse
 from django.views import View
 from django.views.generic.edit import UpdateView
@@ -15,6 +15,11 @@ from asgiref.sync import async_to_sync
 #login required redirect to django admin login page
 @login_required(login_url='/login/')
 def index(request):
+    colores = {
+        'CANCELADO': 'bg-red-500',
+        'LISTO': 'bg-green-500',
+        'PENDIENTE': 'bg-yellow-500',
+    }
     title = "BIDMAX - INICIO"
     color = "#0F172A"
     
@@ -33,7 +38,8 @@ def index(request):
     context = {
         'title': title,
         'items': tickets,  # Mantiene el mismo nombre 'items' para compatibilidad con el template
-        'color': color
+        'color': color,
+        'colores': colores
     }
     return render(request, 'index.html', context)
 
@@ -42,10 +48,12 @@ def ver_ticket(request,pk):
     ticket = get_object_or_404(Ticket,pk=pk)
     items = ItemPedido.objects.filter(ticket=ticket)
     total = sum(item.producto.precio * item.cantidad for item in items)
+    color = "#0F172A"
     context = {
         'ticket':ticket,
         'items':items,
-        'total':total
+        'total':total,
+        'color':color
     }
     return render(request,'watch.html',context)
 
@@ -54,10 +62,12 @@ def detalle_ticket(request,pk):
     ticket = get_object_or_404(Ticket,pk=pk)
     items = ItemPedido.objects.filter(ticket=ticket)
     total = sum(item.producto.precio * item.cantidad for item in items)
+    color = "#0F172A"
     context = {
         'ticket':ticket,
         'items':items,
-        'total':total
+        'total':total,
+        'color':color
     }
     return render(request,'detalle_ticket.html',context)
 
@@ -67,6 +77,8 @@ def crear_ticket(request):
         # Crear el ticket
         ticket = Ticket.objects.create(
             tipo=request.POST['tipo'],
+            estado=request.POST['estado'],
+            caja=request.POST['caja'],
             cliente=request.POST['cliente'],
             celular=request.POST.get('celular'),
             mesa=request.POST.get('mesa') if request.POST.get('mesa') else None,
@@ -110,6 +122,8 @@ def crear_ticket(request):
         'color': color,
         'productos': Producto.objects.all(),
         'tipos': tipo,
+        'estados': estado,
+        'cajas': caja,
     }
     return render(request, 'crear_ticket.html', context)
 
@@ -134,11 +148,13 @@ class DeleteTicketView(View):
 class EditarTicketView(UpdateView):
     model = Ticket
     template_name = 'editar_ticket.html'
-    fields = ['tipo', 'cliente', 'celular', 'mesa', 'observacion']
-    
+    fields = ['tipo', 'cliente', 'celular', 'mesa', 'observacion','estado','caja']
+    color = "#de9f00"
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['productos'] = Producto.objects.all()
+        context['color'] = self.color
         return context
 
     def form_valid(self, form):

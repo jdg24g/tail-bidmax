@@ -16,6 +16,23 @@
                         {% endfor %}
                     </select>
                 </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Estado</label>
+                    <select name="estado" required class="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-300">
+                        {% for estado_valor, estado_nombre in estados %}
+                            <option class="dark:text-gray-300" value="{{ estado_valor }}">{{ estado_nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Caja</label>
+                    <select name="caja" required class="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-300">
+                        {% for caja_valor, caja_nombre in cajas %}
+                            <option class="dark:text-gray-300" value="{{ caja_valor }}">{{ caja_nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre del Cliente</label>
