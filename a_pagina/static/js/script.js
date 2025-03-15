@@ -3,16 +3,11 @@ const WS = new WebSocket(`ws://${window.location.host}/ws/ticket/`);
 WS.onopen = () => {
     console.log('Conectado al servidor de WebSocket');
 };
-
+const LISTA_PATHS = ['/', '/cocina'];
 WS.onmessage = (e) => {
     const data = JSON.parse(e.data);
-    if (window.location.pathname === '/' && data.action === "created") {
-        window.location.reload();
-    }
-    else if (window.location.pathname === '/' && data.action === "deleted") {
-        window.location.reload();
-    }
-    else if (window.location.pathname === '/' && data.action === "updated") {
+    const ACCIONES_PERMITIDAS = ['created', 'deleted', 'updated'];
+    if (LISTA_PATHS.includes(window.location.pathname) && ACCIONES_PERMITIDAS.includes(data.action)) {
         window.location.reload();
     }
 };
