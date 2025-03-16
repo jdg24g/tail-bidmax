@@ -2,42 +2,59 @@
 {% load humanize %}
 
 {% if items %}
-{% for item in items %}
-<div class="flex flex-wrap">
-    <div class="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-8 dark:bg-gray-800 dark:border-gray-700 mt-5">
-        <div class="flex items-center justify-between mb-4">
-            <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">{% if item.mesa %}Mesa: {{ item.mesa }}{% else %}Cliente: {{ item.cliente }}{% endif %}</h5>
-            <a href="{% url "ver_ticket" item.id %}" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500" target="_blank">
-                View all
-            </a>
-       </div>
-       <div class="flow-root">
-            <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
-                {% for item_pedido in item.itempedido_set.all %}
-                            {% if item_pedido.producto.tipo_producto == 'COCINA' %}
-                                <li class="py-3 sm:py-4">
-                                    <div class="flex items-center">
-                                        
-                                        <div class="flex-1 min-w-0 ms-4">
-                                            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
-                                                {{ item_pedido.producto.nombre }}
-                                            </p>
-                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                                Precio por unidad: {{ item_pedido.producto.precio | intcomma}}Gs.
-                                            </p>
-                                        </div>
-                                        <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                                            Cantidad: {{ item_pedido.cantidad }}
-                                        </div>
-                                    </div>
-                                </li>
-                            {% endif %}
-                {% endfor %}
-            </ul>
-       </div>
+<div class="container mx-auto sm:px-2">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 auto-cols-fr gap-4 justify-center">
+        {% for item in items %}
+            <div class="flex flex-wrap">
+                <div class="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-8 dark:bg-gray-800 dark:border-gray-700 mt-2">
+                    <div class="flex flex-col h-full">
+                        <div class="flex-grow">
+                            <div class="flex items-center justify-between mb-4">
+                                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">{% if item.mesa %}Mesa: {{ item.mesa }}{% else %}Cliente: {{ item.cliente }}{% endif %}</h5>
+                                <a href="{% url "ver_ticket" item.id %}" class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500" target="_blank">
+                                    Ver ticket
+                                </a>
+                            </div>
+                            <div class="flow-root">
+                                <ul role="list" class="divide-y divide-gray-200 dark:divide-gray-700">
+                                    {% for item_pedido in item.itempedido_set.all %}
+                                        {% if item_pedido.producto.tipo_producto == 'COCINA' %}
+                                            <li class="py-3 sm:py-4">
+                                                <div class="flex items-center">
+                                                    
+                                                    <div class="flex-1 min-w-0 ms-4">
+                                                        <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                                            {{ item_pedido.producto.nombre }}
+                                                        </p>
+                                                        
+                                                    </div>
+                                                    <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                        Cantidad: {{ item_pedido.cantidad }}
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-end space-x-4 mt-4">
+                            <a href="{% url 'cambiar_estado_listo' item.id %}" 
+                               class="text-yellow-500 hover:text-yellow-600 font-medium">
+                                Listo
+                            </a>
+                            <a href="{% url 'cambiar_estado_cancelado' item.id %}" 
+                               class="text-red-500 hover:text-red-600 font-medium">
+                                Cancelado
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+        {% endfor %}
     </div>
 </div>
-{% endfor %}
 {% endif %}
-
-

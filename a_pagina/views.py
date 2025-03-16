@@ -211,6 +211,7 @@ def login_page(request):
     }
     return render(request, 'login.html', context)
 
+@login_required(login_url='/login/')
 def cocina_views(request):
     title = "BIDMAX - COCINA"
     color = "#0F172A"
@@ -225,3 +226,35 @@ def cocina_views(request):
         'items': tickets
     }
     return render(request, 'cocina_views.html', context)
+
+@login_required(login_url='/login/')
+def cambiar_estado_listo(request,pk):
+    ticket = get_object_or_404(Ticket,pk=pk)
+    ticket.estado = "LISTO"
+    ticket.save()
+    async_to_sync(get_channel_layer().group_send)(  
+            "tickets",
+            {
+                "type": "ticket_updated",
+                "message": {
+                    "action": "updated",
+                }
+            }
+        )
+    return redirect('cocina_views')
+
+@login_required(login_url='/login/')
+def cambiar_estado_cancelado(request,pk):
+    ticket = get_object_or_404(Ticket,pk=pk)
+    ticket.estado = "CANCELADO"
+    ticket.save()
+    async_to_sync(get_channel_layer().group_send)(  
+            "tickets",
+            {
+                "type": "ticket_updated",
+                "message": {
+                    "action": "updated",
+                }
+            }
+        )
+    return redirect('cocina_views')

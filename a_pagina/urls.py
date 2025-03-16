@@ -11,4 +11,6 @@ urlpatterns = [
     path('editar-ticket/<int:pk>/', EditarTicketView.as_view(), name='editar_ticket'),
     path('login/', views.login_page, name='login_page'),
     path('cocina/', views.cocina_views, name='cocina_views'),
+    path('cocina/cambiarEstado/<int:pk>/listo', views.cambiar_estado_listo, name='cambiar_estado_listo'),
+    path('cocina/cambiarEstado/<int:pk>/cancelado', views.cambiar_estado_cancelado, name='cambiar_estado_cancelado'),
 ]
