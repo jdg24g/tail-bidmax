@@ -3,7 +3,7 @@ const WS = new WebSocket(`ws://${window.location.host}/ws/ticket/`);
 WS.onopen = () => {
     console.log('Conectado al servidor de WebSocket');
 };
-const LISTA_PATHS = ['/', '/cocina'];
+const LISTA_PATHS = ['/', '/cocina/'];
 WS.onmessage = (e) => {
     const data = JSON.parse(e.data);
     const ACCIONES_PERMITIDAS = ['created', 'deleted', 'updated'];

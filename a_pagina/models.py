@@ -17,10 +17,15 @@ caja = [
 ]
 
 class Producto(models.Model):
+    tipos = [
+        ('COCINA', 'COCINA'),
+        ('BARRA', 'BARRA'),
+    ]
     nombre = models.CharField(max_length=255)
     precio = models.PositiveIntegerField(blank=True, null=True)
     descripcion = models.TextField(blank=True, null=True)
     imagen = models.ImageField(upload_to='productos/', blank=True, null=True)
+    tipo_producto = models.CharField(max_length=255, choices=tipos,default='COCINA',blank=True, null=True)
 
     class Meta:
         verbose_name = 'Producto'

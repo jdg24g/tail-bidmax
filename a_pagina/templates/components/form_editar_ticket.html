@@ -24,8 +24,8 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Estado</label>
                     <select name="estado" required class="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 dark:text-gray-300">
+                        <option value="PENDIENTE" {% if object.estado == 'PENDIENTE' %}selected{% endif %}>PENDIENTE</option>
                         <option value="CANCELADO" {% if object.estado == 'CANCELADO' %}selected{% endif %}>CANCELADO</option>
-                        <option value="EN_PROCESO" {% if object.estado == 'EN_PROCESO' %}selected{% endif %}>EN PROCESO</option>
                         <option value="LISTO" {% if object.estado == 'LISTO' %}selected{% endif %}>LISTO</option>
                     </select>
                 </div>

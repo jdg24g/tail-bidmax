@@ -210,3 +210,18 @@ def login_page(request):
         'color': '#0F172A'
     }
     return render(request, 'login.html', context)
+
+def cocina_views(request):
+    title = "BIDMAX - COCINA"
+    color = "#0F172A"
+    tickets = Ticket.objects.filter(
+        estado="PENDIENTE",
+        productos__tipo_producto="COCINA"
+    ).distinct().order_by('-add_time')
+    
+    context = {
+        'title': title,
+        'color': color,
+        'items': tickets
+    }
+    return render(request, 'cocina_views.html', context)
