@@ -53,7 +53,7 @@ class Ticket(models.Model):
     cliente = models.CharField(max_length=255,blank=True, null=True)
     celular = models.CharField(max_length=255,blank=True, null=True)
     mesa = models.PositiveIntegerField(blank=True, null=True)
-    add_time = models.DateTimeField(auto_now=True)
+    add_time = models.DateTimeField(auto_now_add=True)
     productos = models.ManyToManyField(Producto,through='ItemPedido', blank=True)
     observacion = models.TextField(blank=True, null=True)
 
