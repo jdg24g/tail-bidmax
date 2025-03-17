@@ -13,4 +13,5 @@ urlpatterns = [
     path('cocina/', views.cocina_views, name='cocina_views'),
     path('cocina/cambiarEstado/<int:pk>/listo', views.cambiar_estado_listo, name='cambiar_estado_listo'),
     path('cocina/cambiarEstado/<int:pk>/cancelado', views.cambiar_estado_cancelado, name='cambiar_estado_cancelado'),
+    path('testnavbar/', views.testnavbar, name='testnavbar'),
 ]

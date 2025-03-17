@@ -258,3 +258,12 @@ def cambiar_estado_cancelado(request,pk):
             }
         )
     return redirect('cocina_views')
+
+def testnavbar(request):
+    title = "BIDMAX - TEST NAVBAR"
+    color = "#0F172A"
+    context = {
+        'title': title,
+        'color': color
+    }
+    return render(request, 'testnavbar.html', context)
