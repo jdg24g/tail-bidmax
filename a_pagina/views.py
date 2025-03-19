@@ -14,13 +14,9 @@ from asgiref.sync import async_to_sync
 
 #login required redirect to django admin login page
 @login_required(login_url='/login/')
-def index(request):
-    colores = {
-        'CANCELADO': 'bg-red-500',
-        'LISTO': 'bg-green-500',
-        'PENDIENTE': 'bg-yellow-500',
-    }
-    title = "BIDMAX - INICIO"
+def tabla_todos(request):
+
+    title = "BIDMAX - TODOS"
     color = "#0F172A"
     
     # Obtener todos los tickets ordenados
@@ -39,10 +35,27 @@ def index(request):
         'title': title,
         'items': tickets,  # Mantiene el mismo nombre 'items' para compatibilidad con el template
         'color': color,
-        'colores': colores
+        'tab_context': "TODOS"
     }
     return render(request, 'index.html', context)
 
+
+@login_required(login_url='/login/')
+def index(request):
+    title = "BIDMAX - INDEX"
+    color = "#0F172A"
+    filtro = ["PENDIENTE","A PAGAR"]
+    lista_tickets = Ticket.objects.filter(caja__in=filtro).order_by('-add_time')
+    paginator = Paginator(lista_tickets,50)
+    page_number = request.GET.get('page',1)
+    tickets = paginator.get_page(page_number)
+    context = {
+        'title':title,
+        'items':tickets,
+        'color':color,
+        'tab_context':"PENDIENTE"
+    }
+    return render(request, 'index.html',context)
 @login_required(login_url='/login/')
 def ver_ticket(request,pk):
     ticket = get_object_or_404(Ticket,pk=pk)

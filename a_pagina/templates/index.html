@@ -3,14 +3,26 @@
 {% include "components/navbar.html" %}
 {% endblock header %}
 
+
+
 {% block content %}
  {% if items %}
- {% include "components/table_all.html" %}
- 
+ {% include "components/table_all.html" %} 
  {% else %}
+
+
  <div class="flex justify-center items-center h-svh dark:bg-gray-900 dark:text-white">
     <div class="flex flex-col items-center justify-center">
-        <h1 class="text-2xl font-bold mb-4">No hay tickets</h1>
+        <h1 class="text-2xl font-bold mb-4">
+            No hay tickets  {% if tab_context == 'TODOS' %}
+            TODOS
+        {% elif tab_context == 'PENDIENTE' %}
+            PENDIENTES
+        {% elif tab_context == 'DELIVERY' %}
+        DELIVERY
+        {% elif tab_context == 'COBRADO' %}
+        COBRADO
+        {% endif %}</h1>
         <a href="{% url 'crear_ticket' %}" class="bg-blue-500 text-white px-4 py-2 rounded-md">Crear Ticket</a>
     </div>
  </div>

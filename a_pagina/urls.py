@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
-from .views import DeleteTicketView, EditarTicketView
-
+from .views import DeleteTicketView, EditarTicketView,tabla_todos
+from .table_views import tabla_delivery,tabla_cobrado 
 urlpatterns = [
     path('', views.index, name='index'),
     path('ticket/<int:pk>/', views.detalle_ticket, name='detalle_ticket'),
@@ -14,4 +14,8 @@ urlpatterns = [
     path('cocina/cambiarEstado/<int:pk>/listo', views.cambiar_estado_listo, name='cambiar_estado_listo'),
     path('cocina/cambiarEstado/<int:pk>/cancelado', views.cambiar_estado_cancelado, name='cambiar_estado_cancelado'),
     path('testnavbar/', views.testnavbar, name='testnavbar'),
+    path('tabla-delivery/', tabla_delivery, name='tabla_delivery'),
+    path('tabla-cobrado/', tabla_cobrado, name='tabla_cobrado'),
+    path('tabla-todos/', tabla_todos, name='tabla_todos')
+
 ]

@@ -1,11 +1,10 @@
 {% load static %} {% load humanize %}
 <div class="flex justify-center">
-  <div
-    class="relative shadow-md sm:rounded-lg p-2 rounded-sm bg-gray-300 mt-5 w-11/12"
-  >
-    <table
-      class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400"
-    >
+  <div class="relative shadow-md sm:rounded-lg p-2 rounded-sm bg-gray-300 mt-5 w-11/12">
+    <div class="flex flex-col sm:flex-row gap-2 mb-4">
+      {% include "components/sub_header.html" %}
+    </div>
+    <table class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-200">
         <tr>
           <th scope="col" class="px-4 py-3">Tipo</th>
