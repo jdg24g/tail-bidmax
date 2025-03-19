@@ -42,7 +42,7 @@ def tabla_todos(request):
 
 @login_required(login_url='/login/')
 def index(request):
-    title = "BIDMAX - INDEX"
+    title = "BIDMAX - PENDIENTES"
     color = "#0F172A"
     filtro = ["PENDIENTE","A PAGAR"]
     lista_tickets = Ticket.objects.filter(caja__in=filtro).order_by('-add_time')
