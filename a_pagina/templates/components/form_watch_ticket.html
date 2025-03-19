@@ -32,6 +32,8 @@
       <h2>Observaciones: {{ ticket.observacion }}</h2>
       {% else %}
       {% endif %}
+      <h2>Cocina: {{ ticket.estado }}</h2>
+      <h2>Caja: {{ ticket.caja }}</h2>
       <div class="mt-4 flex flex-col gap-4">
         <h2 class="text-2xl font-bold">Total: {{ ticket.get_total|intcomma }} Gs.</h2>
         <h2 class="text-lg font-bold">Productos</h2>

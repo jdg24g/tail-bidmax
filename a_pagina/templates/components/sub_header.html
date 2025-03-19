@@ -1,33 +1,27 @@
-
-<div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-100">
-    <ul class="flex justify-between -mb-px **:dark:hover:border-blue-500 **:dark:hover:text-blue-500">
-        <li class="flex-1">
-            {% if tab_context == "PENDIENTE" %}
-            <a href="{% url 'index' %}" class="inline-block w-full p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500">Pendientes</a>
-            {% else %}
-            <a href="{% url 'index' %}" class="inline-block w-full p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Pendientes</a>
-            {% endif %}
-        </li>
-        <li class="flex-1">
-            {% if tab_context == "DELIVERY" %}
-            <a href="{% url 'tabla_delivery' %}" class="inline-block w-full p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500">Delivery</a>
-            {% else %}
-            <a href="{% url 'tabla_delivery' %}" class="inline-block w-full p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Delivery</a>
-            {% endif %}
-        </li>
-        <li class="flex-1">
-            {% if tab_context == "COBRADO" %}
-            <a href="{% url 'tabla_cobrado' %}" class="inline-block w-full p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500">Cobrado</a>
-            {% else %}
-            <a href="{% url 'tabla_cobrado' %}" class="inline-block w-full p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Cobrado</a>
-            {% endif %}
-        </li>
-        <li class="flex-1">
-            {% if tab_context == "TODOS" %}
-            <a href="{% url 'tabla_todos' %}" class="inline-block w-full p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500">Todos</a>
-            {% else %}
-            <a href="{% url 'tabla_todos' %}" class="inline-block w-full p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Todos</a>
-            {% endif %}
-        </li>
-    </ul>
+<div class="sm:hidden">
+  <label for="tabs" class="sr-only">Seleccionar pestaña</label>
+  <select id="tabs" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" onchange="location = this.value;">
+      <option value="{% url 'index' %}" {% if tab_context == "PENDIENTE" %}selected{% endif %}>Pendientes</option>
+      <option value="{% url 'tabla_delivery' %}" {% if tab_context == "DELIVERY" %}selected{% endif %}>Delivery</option>
+      <option value="{% url 'tabla_cobrado' %}" {% if tab_context == "COBRADO" %}selected{% endif %}>Cobrado</option>
+      <option value="{% url 'tabla_todos' %}" {% if tab_context == "TODOS" %}selected{% endif %}>Todos</option>
+      <option value="{% url 'tabla_delivery_todos' %}" {% if tab_context == "DELIVERY_TODOS" %}selected{% endif %}>Delivery Todos</option>
+  </select>
 </div>
+<ul class="hidden text-sm font-medium text-center text-gray-500 rounded-lg shadow-sm sm:flex dark:divide-gray-700 dark:text-gray-400">
+  <li class="w-full focus-within:z-10">
+      <a href="{% url 'index' %}" class="inline-block w-full p-4 border-gray-200 dark:border-gray-700 rounded-s-lg focus:ring-4 focus:ring-blue-300 active focus:outline-none {% if tab_context == 'PENDIENTE' %}text-gray-900 bg-gray-100 dark:bg-gray-700 dark:text-white{% else %}bg-white hover:text-gray-700 hover:bg-gray-50 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700{% endif %}">Pendientes</a>
+  </li>
+  <li class="w-full focus-within:z-10">
+      <a href="{% url 'tabla_delivery' %}" class="inline-block w-full p-4 border-gray-200 dark:border-gray-700 focus:ring-4 focus:ring-blue-300 focus:outline-none {% if tab_context == 'DELIVERY' %}text-gray-900 bg-gray-100 dark:bg-gray-700 dark:text-white{% else %}bg-white hover:text-gray-700 hover:bg-gray-50 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700{% endif %}">Delivery</a>
+  </li>
+  <li class="w-full focus-within:z-10">
+      <a href="{% url 'tabla_cobrado' %}" class="inline-block w-full p-4 border-gray-200 dark:border-gray-700 focus:ring-4 focus:ring-blue-300 focus:outline-none {% if tab_context == 'COBRADO' %}text-gray-900 bg-gray-100 dark:bg-gray-700 dark:text-white{% else %}bg-white hover:text-gray-700 hover:bg-gray-50 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700{% endif %}">Cobrado</a>
+  </li>
+  <li class="w-full focus-within:z-10">
+      <a href="{% url 'tabla_todos' %}" class="inline-block w-full p-4 border-gray-200 dark:border-gray-700 focus:ring-4 focus:ring-blue-300 focus:outline-none {% if tab_context == 'TODOS' %}text-gray-900 bg-gray-100 dark:bg-gray-700 dark:text-white{% else %}bg-white hover:text-gray-700 hover:bg-gray-50 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700{% endif %}">Todos</a>
+  </li>
+  <li class="w-full focus-within:z-10">
+      <a href="{% url 'tabla_delivery_todos' %}" class="inline-block w-full p-4 border-gray-200 dark:border-gray-700 rounded-e-lg focus:ring-4 focus:outline-none focus:ring-blue-300 {% if tab_context == 'DELIVERY_TODOS' %}text-gray-900 bg-gray-100 dark:bg-gray-700 dark:text-white{% else %}bg-white hover:text-gray-700 hover:bg-gray-50 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700{% endif %}">Delivery Todos</a>
+  </li>
+</ul>

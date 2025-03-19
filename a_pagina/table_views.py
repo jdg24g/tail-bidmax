@@ -36,3 +36,20 @@ def tabla_cobrado(request):
         'tab_context':"COBRADO"
     }
     return render(request,"index.html",context)
+
+@login_required(login_url="/login/")
+def tabla_delivery_todos(request):
+    title = "BIDMAX - DELIVERY TODOS"
+    color = "#0F172A"
+    lista_tickets = Ticket.objects.filter(tipo="DELIVERY").order_by('-add_time')
+    pagintor = Paginator(lista_tickets,5)
+    page_number = request.GET.get('page',1)
+    tickets = pagintor.get_page(page_number)
+    context ={
+        'title' : title,
+        'color': color,
+        'items' : tickets,
+        'tab_context' : "DELIVERY_TODOS"
+    }
+    return render(request,"index.html",context)
+    

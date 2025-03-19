@@ -23,7 +23,7 @@ def tabla_todos(request):
     lista_tickets = Ticket.objects.all().order_by('-add_time')
     
     # Crear el paginador con 50 items por página
-    paginator = Paginator(lista_tickets, 50)
+    paginator = Paginator(lista_tickets, 5)
     
     # Obtener el número de página desde la URL
     page_number = request.GET.get('page', 1)
@@ -46,7 +46,7 @@ def index(request):
     color = "#0F172A"
     filtro = ["PENDIENTE","A PAGAR"]
     lista_tickets = Ticket.objects.filter(caja__in=filtro).order_by('-add_time')
-    paginator = Paginator(lista_tickets,50)
+    paginator = Paginator(lista_tickets,5)
     page_number = request.GET.get('page',1)
     tickets = paginator.get_page(page_number)
     context = {
