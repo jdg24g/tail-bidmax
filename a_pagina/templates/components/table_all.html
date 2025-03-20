@@ -1,9 +1,7 @@
 {% load static %} {% load humanize %}
 <div class="flex justify-center">
   <div class="relative shadow-md sm:rounded-lg p-2 rounded-sm bg-gray-300 mt-5 w-11/12">
-    <div class="mb-4">
-      {% include "components/sub_header.html" %}
-    </div>
+    
     <table class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-200">
         <tr>
@@ -14,8 +12,18 @@
         </tr>
       </thead>
       <tbody class="text-center" id="ticket-table">
-        {% if items %} {% for item in items %}
-        <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
+        {% if items %} {% for item in items %} 
+        <tr class="
+        {% if item.estado == 'LISTO' and item.caja == 'PENDIENTE' or item.caja == 'A PAGAR' %}
+        bg-green-200
+        hover:bg-green-300
+        {% else %}
+        bg-white
+        hover:bg-gray-50
+        {% endif %}
+        border-b
+        border-gray-200
+        ">
           <th
             scope="row"
             class=" px-2 py-2 font-normal text-gray-900 whitespace-nowrap select-none"

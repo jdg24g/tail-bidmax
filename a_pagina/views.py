@@ -45,7 +45,8 @@ def index(request):
     title = "BIDMAX - PENDIENTES"
     color = "#0F172A"
     filtro = ["PENDIENTE","A PAGAR"]
-    lista_tickets = Ticket.objects.filter(caja__in=filtro).order_by('-add_time')
+    tiposs = ["MESA","RECOGER"]
+    lista_tickets = Ticket.objects.filter(caja__in=filtro,tipo__in=tiposs).order_by('-add_time')
     paginator = Paginator(lista_tickets,5)
     page_number = request.GET.get('page',1)
     tickets = paginator.get_page(page_number)
