@@ -1,9 +1,7 @@
 {% load static %} {% load humanize %}
 
 <div class="flex justify-center">
-  <div
-    class="relative shadow-md sm:rounded-lg p-6 rounded-sm bg-white dark:bg-gray-800 mt-5 sm:w-6/12 w-full"
-  >
+  <div class="relative shadow-md sm:rounded-lg p-6 rounded-sm bg-white dark:bg-gray-800 mt-5 sm:w-6/12 w-full">
     <div class="flex justify-between mb-6 items-center ">
       <h1 class="text-2xl font-bold dark:text-white">
         Ver Ticket
@@ -12,7 +10,7 @@
         <h1 class="text-2xl" style="font-family: 'Roboto', sans-serif;">
           X
         </h1>
-    </button>
+      </button>
     </div>
     <div class="space-y-4 dark:text-white">
       <h2>Tipo de Pedido: {{ ticket.tipo }}</h2>
@@ -57,11 +55,55 @@
         </table>
       </div>
       </div>
+      {% if ticket.caja != "COBRADO" %}
+      <div>
+        <button type="button"onclick="cobrarTicket({{ ticket.id }})" class="mt-4 px-4 py-2 bg-green-500 text-white rounded cursor-pointer float-right">Cobrar</button>
+      </div>
+      {% else %}
+      <p class="text-2xl text-center mt-4">Ticket Cobrado</p>
+      {% endif %}
     </div>
   </div>
 </div>
 <script>
+  function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
   function closeWatchTicket(){
     window.close();
+  }
+  function cobrarTicket(ticketId){
+    console.log(ticketId);
+    const url = `/cambiarCajaCobrado/${ticketId}/`;
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "X-CSRFToken": getCookie("csrftoken"),
+      },
+    })
+    .then((response) => {
+      if (response.ok) {
+        // Recarga la página después de eliminar
+        window.close();
+      } else {
+        alert("Error al cambiar la caja");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("Error al cambiar la caja");
+    });
+    
   }
 </script>
