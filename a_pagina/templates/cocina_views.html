@@ -1,7 +1,14 @@
 {% extends "base.html" %}
-
-{% block header %} {% include "components/navbar.html" %}{% endblock header %}
-
+{% block header %}{% include "components/navbar.html" %}{% endblock header %}
 {% block content %}
+{% if items %}
 {% include "components/cards/cocina_cards.html" %}
-{% endblock content %}
+{% else %}
+<div class="flex justify-center items-center h-svh dark:bg-gray-900 dark:text-white">
+  <div class="flex flex-col items-center justify-center">
+    <h1 class="text-2xl font-bold mb-4">
+      NO HAY TICKETS PENDIENTES
+    </h1>
+  </div>
+</div>
+{% endif %} {% endblock content %}

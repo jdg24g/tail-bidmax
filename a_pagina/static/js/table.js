@@ -1,3 +1,4 @@
+// Funciones de impresión y eliminación
 function printTicket(url) {
   // Abre la URL en una nueva ventana
   const printWindow = window.open(url, "_blank");
@@ -8,7 +9,7 @@ function printTicket(url) {
     // Espera un momento y luego cierra la ventana
     setTimeout(function () {
       printWindow.close();
-    }, 5000); // Espera 1 segundo antes de cerrar
+    }, 5000); // Espera 5 segundos antes de cerrar
   };
 }
 
@@ -40,6 +41,8 @@ function deleteTicket(ticketId) {
   }
 }
 
+
+
 // Función auxiliar para obtener el token CSRF
 function getCookie(name) {
   let cookieValue = null;
@@ -55,3 +58,4 @@ function getCookie(name) {
   }
   return cookieValue;
 }
+

@@ -23,19 +23,22 @@
         {% endif %}
         border-b
         border-gray-200
-        ">
+        open-modal
+        cursor-pointer select-none"
+        data-tr-id="{{ item.id }}"
+        data-caja="{{ item.caja }}">
           <th
             scope="row"
-            class=" px-2 py-2 font-normal text-gray-900 whitespace-nowrap select-none"
+            class="px-2 py-2 font-normal text-gray-900 whitespace-nowrap select-none"
             data-id="{{ item.id }}"
             data-estado="{{ item.estado }}"
           >
             {{ item.tipo }}
           </th>
           {% if item.mesa %}
-          <td class="px-2 py-4 select-none">MESA: {{ item.mesa }}</td>
+          <td id="clienteStatus" class="px-2 py-4 select-none" data-cliente="{{ item.mesa }}">MESA: {{ item.mesa }}</td>
           {% else %}
-          <td class="px-2 py-4 select-none">{{ item.cliente }}</td>
+          <td id="clienteStatus" class="px-2 py-4 select-none" data-cliente="{{ item.cliente }}">{{ item.cliente }}</td>
           {% endif %}
 
           <td class="px-2 py-2 select-none">

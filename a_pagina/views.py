@@ -273,11 +273,18 @@ def cambiar_estado_cancelado(request,pk):
         )
     return redirect('cocina_views')
 
-def testnavbar(request):
-    title = "BIDMAX - TEST NAVBAR"
-    color = "#0F172A"
-    context = {
-        'title': title,
-        'color': color
-    }
-    return render(request, 'testnavbar.html', context)
+@login_required(login_url='/login/')
+def cambiar_caja_cobrado(request,pk):
+    ticket = get_object_or_404(Ticket,pk=pk)
+    ticket.caja = "COBRADO"
+    ticket.save()
+    async_to_sync(get_channel_layer().group_send)(
+        "tickets",
+            {
+                "type": "ticket_updated",
+                "message": {
+                    "action": "updated",
+                }
+            }
+    )
+    return redirect('index')

@@ -13,10 +13,10 @@ urlpatterns = [
     path('cocina/', views.cocina_views, name='cocina_views'),
     path('cocina/cambiarEstado/<int:pk>/listo', views.cambiar_estado_listo, name='cambiar_estado_listo'),
     path('cocina/cambiarEstado/<int:pk>/cancelado', views.cambiar_estado_cancelado, name='cambiar_estado_cancelado'),
-    path('testnavbar/', views.testnavbar, name='testnavbar'),
     path('tabla-delivery/', tabla_delivery, name='tabla_delivery'),
     path('tabla-cobrado/', tabla_cobrado, name='tabla_cobrado'),
     path('tabla-todos/', tabla_todos, name='tabla_todos'),
-    path('tabla-delivery-todos/', tabla_delivery_todos, name='tabla_delivery_todos')
+    path('tabla-delivery-todos/', tabla_delivery_todos, name='tabla_delivery_todos'),
+    path('cambiarCajaCobrado/<int:pk>/', views.cambiar_caja_cobrado, name='cambiar_caja_cobrado'),
 
 ]
