@@ -1,1 +1,9 @@
 {% extends "base.html" %}
+{% block header %}
+{% include "components/navbar.html" %}
+{% include "components/sub_header.html" %}
+{% if items %}
+{% include "components/subheader_mesa.html" %}
+{% endif %}
+{% endblock header %}
+
