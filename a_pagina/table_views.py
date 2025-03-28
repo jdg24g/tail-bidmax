@@ -60,6 +60,9 @@ def tabla_delivery_todos(request):
 def ver_tabla_por_mesa(request, mesa=None):
     filtros_mesa = ["PENDIENTE","A PAGAR"]
     lista_mesas = Ticket.objects.filter(caja__in=filtros_mesa,tipo="MESA").order_by('mesa')
+    numMesaUnico = Ticket.objects.filter(
+        caja__in=filtros_mesa, tipo="MESA"
+    ).values("mesa").distinct().order_by("mesa")
     if mesa != None:
         mesaNum = int(mesa)
         lista_mesa_num = Ticket.objects.filter(mesa=mesaNum,tipo="MESA",caja="PENDIENTE").order_by('-add_time')
@@ -71,7 +74,8 @@ def ver_tabla_por_mesa(request, mesa=None):
                 'color': "#0F172A",
                 'items': lista_mesas,
                 'tab_context': f"MESAS_PENDIENTES {mesaNum}",
-                'tabla_mesa' : lista_mesa_num
+                'tabla_mesa' : lista_mesa_num,
+                'numMesaUnico' : numMesaUnico
             }
             return render(request, "sub_index.html", context)
     else:
@@ -79,11 +83,7 @@ def ver_tabla_por_mesa(request, mesa=None):
             'title': "BIDMAX - MESAS PENDIENTES",
             'color': "#0F172A",
             'items': lista_mesas,
-            'tab_context': "MESAS_PENDIENTES"
+            'tab_context': "MESAS_PENDIENTES",
+            'numMesaUnico' : numMesaUnico
         }
-        return render(request, "sub_index.html", context)
-
-
-
-
-    
+        return render(request, "sub_index.html", context)    
