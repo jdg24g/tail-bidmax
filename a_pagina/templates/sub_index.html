@@ -6,4 +6,10 @@
 {% include "components/subheader_mesa.html" %}
 {% endif %}
 {% endblock header %}
-
+{% block content %}
+{% if tabla_mesa %}
+{% include "components/table_mesa.html" %}
+{% else %}
+{% include "components/table_all.html" %}
+{% endif %}
+{% endblock content %}

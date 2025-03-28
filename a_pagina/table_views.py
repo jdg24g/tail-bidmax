@@ -65,7 +65,15 @@ def ver_tabla_por_mesa(request, mesa=None):
         lista_mesa_num = Ticket.objects.filter(mesa=mesaNum,tipo="MESA",caja="PENDIENTE").order_by('-add_time')
         if lista_mesa_num.count() == 0:
             return HttpResponse(f"No hay tickets con esa mesa numero {mesaNum}")
-        return HttpResponse(lista_mesa_num)
+        else:
+            context = {
+                'title': "BIDMAX - MESAS PENDIENTES",
+                'color': "#0F172A",
+                'items': lista_mesas,
+                'tab_context': f"MESAS_PENDIENTES {mesaNum}",
+                'tabla_mesa' : lista_mesa_num
+            }
+            return render(request, "sub_index.html", context)
     else:
         context = {
             'title': "BIDMAX - MESAS PENDIENTES",
