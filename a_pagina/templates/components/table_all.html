@@ -1,6 +1,7 @@
 {% load static %} {% load humanize %}
 <div class="flex justify-center">
   <div class="relative shadow-md sm:rounded-lg p-2 rounded-sm bg-gray-300 mt-5 w-11/12">
+    {% if cobrado_total %}<p class="float-right  text-sm text-gray-500  mb-2">Total  cobrado: {{ cobrado_total|intcomma }}</p>{% endif %}
     
     <table class="w-full text-sm text-center rtl:text-right text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-200">

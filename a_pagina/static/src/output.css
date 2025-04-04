@@ -739,6 +739,9 @@
   .col-span-6 {
     grid-column: span 6 / span 6;
   }
+  .float-end {
+    float: inline-end;
+  }
   .float-right {
     float: right;
   }
@@ -3719,6 +3722,11 @@
   .md\:ml-auto {
     @media (width >= 48rem) {
       margin-left: auto;
+    }
+  }
+  .md\:flex {
+    @media (width >= 48rem) {
+      display: flex;
     }
   }
   .md\:hidden {

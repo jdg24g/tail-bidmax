@@ -46,6 +46,7 @@ def index(request):
     color = "#0F172A"
     filtro = ["PENDIENTE","A PAGAR"]
     tiposs = ["MESA","RECOGER"]
+    cocina = ["PENDIENTE"]
     lista_tickets = Ticket.objects.filter(caja__in=filtro,tipo__in=tiposs).order_by('-add_time')
     paginator = Paginator(lista_tickets,20)
     page_number = request.GET.get('page',1)
